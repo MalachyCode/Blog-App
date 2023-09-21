@@ -1,0 +1,9 @@
+POST http://localhost:3005/api/blogs
+Content-Type: 'application/json'
+
+{
+ "title": "Mongoose works with MongoDb",
+ "author": "Nwafor Malachy",
+ "url": "https://www.malachynwafor.blogspot.com",
+ "likes": 50
+}
