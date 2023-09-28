@@ -16,7 +16,36 @@
   padding: 10px;
   margin-bottom: 10px;
 }
-.delete-btn {
+#login-button {
+  width: 100%;
+  margin-top: 30px;
+}
+.toggling {
+  /* transition: all 1s ease-out; */
+  transition-delay: 0s;
+  transition-duration: 1s;
+  transition-timing-function: ease-out;
+  transition-property: all;
+}
+/* .delete-btn {
   background: blue;
   color: black;
+} */
+.header {
+  text-align: center;
+  color: brown;
+}
+table {
+  width: 200px;
+}
+
+tr,
+td,
+th {
+  width: 100px;
+  /* border-bottom: 1px solid black; */
+}
+
+a {
+  text-decoration: none;
 }
