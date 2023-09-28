@@ -1,27 +1,46 @@
 import { useEffect } from 'react';
 import blogService from './services/blogs';
-import loginService from './services/login';
+import userService from './services/users';
 import './index.css';
-import ErrorNotification from './components/ErrorNotification';
-// import SuccessNotification from './components/SuccessNotification';
-import Togglling from './components/Togglling.js';
-import BlogForm from './components/BlogForm';
-import Blog from './components/Blog';
 import { useSelector, useDispatch } from 'react-redux';
 import { setBlogs } from './reducers/blogReducer';
-import { setMessage } from './reducers/notificationReducer';
-import { setUsername } from './reducers/usernameReducer';
-import { setPassword } from './reducers/passwordReducer';
 import { setUser } from './reducers/userReducer';
+import { setUsers } from './reducers/usersReducer';
+import { setMessage } from './reducers/notificationReducer';
+import {
+  Routes,
+  Route,
+  Link,
+  useMatch,
+  Navigate,
+  useNavigate,
+} from 'react-router-dom';
+import Home from './pages/Home';
+import Blogs from './pages/Blogs';
+import Users from './pages/Users';
+import Login from './pages/Login';
+import UserInfo from './pages/UserInfo';
+import BlogInfo from './pages/BlogInfo';
+import { Container, Navbar, Nav } from 'react-bootstrap';
 
 const App = () => {
+  const navigate = useNavigate();
+
+  const user = useSelector((state) => state.user);
+  const users = useSelector((state) => state.users);
   const blogs = useSelector((state) => state.blogs);
-  const user = useSelector((state) => state.users);
-  const message = useSelector((state) => state.notifications);
-  const username = useSelector((state) => state.usernames);
-  const password = useSelector((state) => state.passwords);
 
   const dispatch = useDispatch();
+
+  const matchBlog = useMatch('/blogs/:id');
+  const blogToShow = matchBlog
+    ? blogs.find((blog) => blog.id === matchBlog.params.id)
+    : null;
+
+  const matchUser = useMatch('/users/:id');
+  const userToShow = matchUser
+    ? users.find((user) => user.id === matchUser.params.id)
+    : null;
 
   useEffect(() => {
     blogService
@@ -32,50 +51,18 @@ const App = () => {
   }, []);
 
   useEffect(() => {
+    userService.getAll().then((users) => dispatch(setUsers(users)));
+  }, []);
+
+  useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBloglistappUser');
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
       dispatch(setUser(user));
       blogService.setToken(user.token);
+      navigate('/');
     }
   }, []);
-
-  const addBlog = (blogObject) => {
-    blogService.create(blogObject).then((returnedBlog) => {
-      dispatch(setBlogs(blogs.concat(returnedBlog)));
-      console.log(returnedBlog);
-    });
-  };
-
-  const handleLogin = async (event) => {
-    event.preventDefault();
-
-    try {
-      const user = await loginService.login({
-        username,
-        password,
-      });
-      window.localStorage.setItem(
-        'loggedBloglistappUser',
-        JSON.stringify(user)
-      );
-      blogService.setToken(user.token);
-      dispatch(setUser(user));
-      dispatch(setUsername(''));
-      dispatch(setPassword(''));
-    } catch (exception) {
-      dispatch(setMessage('Wrong username or password'));
-      setTimeout(() => {
-        dispatch(setMessage(null));
-      }, 5000);
-    }
-  };
-
-  const handleLogout = async () => {
-    window.localStorage.removeItem('loggedBloglistappUser');
-    console.log(`${user.name} logged out`);
-    dispatch(setUser(null));
-  };
 
   const handleLikeClick = async (id) => {
     const blog = blogs.find((b) => b.id === id);
@@ -101,71 +88,75 @@ const App = () => {
     if (window.confirm(`Delete ${title} by ${author}?`)) {
       await blogService.deleteBlog(id);
       dispatch(setBlogs(blogs.filter((blog) => blog.id !== id)));
+      navigate('/blogs');
     }
   };
 
   if (user === null) {
-    return (
-      <div>
-        <h2>Log in to application</h2>
-        <ErrorNotification message={message} />
-
-        <form onSubmit={handleLogin}>
-          <div>
-            username
-            <input
-              id='username'
-              type='text'
-              value={username}
-              name='Username'
-              onChange={({ target }) => dispatch(setUsername(target.value))}
-            />
-          </div>
-          <div>
-            password
-            <input
-              id='password'
-              type='password'
-              value={password}
-              name='Password'
-              onChange={({ target }) => dispatch(setPassword(target.value))}
-            />
-          </div>
-          <button id='login-button' type='submit'>
-            login
-          </button>
-        </form>
-      </div>
-    );
+    <Navigate replace to='/login' />;
   }
 
-  const blogForm = () => (
-    <Togglling buttonLabel='new blog'>
-      <BlogForm createblog={addBlog} />
-    </Togglling>
-  );
+  const padding = {
+    padding: 5,
+  };
 
   return (
-    <div>
-      <h2>blogs</h2>
+    <div className='container'>
+      <Navbar collapseOnSelect expand='lg' bg='dark' data-bs-theme='dark'>
+        <Container>
+          <Navbar.Brand href='#'>Blog App</Navbar.Brand>
+          <Navbar.Toggle aria-controls='responsive-navbar-nav' />
+          <Navbar.Collapse id='responsive-navbar-nav'>
+            <Nav className='me-auto'>
+              <Nav.Link href='#' as='span'>
+                <Link style={padding} to={'/'}>
+                  Home
+                </Link>
+              </Nav.Link>
+              <Nav.Link href='#' as='span'>
+                <Link style={padding} to={'/blogs'}>
+                  Blogs
+                </Link>
+              </Nav.Link>
+              <Nav.Link href='#' as='span'>
+                <Link style={padding} to={'users'}>
+                  Users
+                </Link>
+              </Nav.Link>
+            </Nav>
+            <Navbar.Text>Signed in as: {user ? user.name : ''}</Navbar.Text>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
 
-      {/* <SuccessNotification message={successMessage} /> */}
-      {/* <p>{user.name} logged in</p> */}
-      <div>
-        <p>{user.name} logged in</p>
-        {blogForm()}
-      </div>
-      {blogs.map((blog) => (
-        <Blog
-          key={blog.id.toString()}
-          blog={blog}
-          handleClick={() => handleLikeClick(blog.id)}
-          handleDelete={() => handleDelete(blog.title, blog.author, blog.id)}
+      <Routes>
+        <Route path='/users/:id' element={<UserInfo user={userToShow} />} />
+        <Route
+          path='/blogs/:id'
+          element={
+            <BlogInfo
+              blog={blogToShow}
+              handleClick={() => handleLikeClick(blogToShow.id)}
+              handleDelete={() =>
+                handleDelete(blogToShow.title, blogToShow.author, blogToShow.id)
+              }
+            />
+          }
         />
-      ))}
-      <button type='submit' onClick={handleLogout}>
-        logout
-      </button>
+        <Route
+          path='/blogs'
+          element={user ? <Blogs /> : <Navigate replace to='/login' />}
+        />
+        <Route
+          path='users'
+          element={user ? <Users /> : <Navigate replace to='/login' />}
+        />
+        <Route path='/login' element={<Login />} />
+        <Route
+          path='/'
+          element={user ? <Home /> : <Navigate replace to='/login' />}
+        />
+      </Routes>
     </div>
   );
 };
