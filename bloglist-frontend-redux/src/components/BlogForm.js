@@ -1,11 +1,11 @@
-// import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setMessage } from '../reducers/notificationReducer';
 import { setNewTitle } from '../reducers/titleReducer';
 import { setNewAuthor } from '../reducers/authorReducer';
 import { setNewUrl } from '../reducers/urlReducer';
+import { Alert, Button, Form } from 'react-bootstrap';
 
-import SuccessNotification from './SuccessNotification';
+// import SuccessNotification from './SuccessNotification';
 
 const BlogForm = ({ createblog }) => {
   const message = useSelector((state) => state.notifications);
@@ -13,11 +13,6 @@ const BlogForm = ({ createblog }) => {
   const newAuthor = useSelector((state) => state.authors);
   const newUrl = useSelector((state) => state.urls);
   const dispatch = useDispatch();
-
-  // const [newTitle, setNewTitle] = useState('');
-  // const [newAuthor, setNewAuthor] = useState('');
-  // const [newUrl, setNewUrl] = useState('');
-  // const [successMessage, setSuccessMessage] = useState(null);
 
   const addBlog = (event) => {
     event.preventDefault();
@@ -38,43 +33,43 @@ const BlogForm = ({ createblog }) => {
 
   return (
     <div>
-      <SuccessNotification message={message} />
+      {message && <Alert variant='success'>{message}</Alert>}
+
+      {/* <SuccessNotification message={message} /> */}
 
       <h2>create a new blog</h2>
 
-      <form onSubmit={addBlog}>
-        <div>
-          title:
-          <input
+      <Form onSubmit={addBlog}>
+        <Form.Group>
+          <Form.Label>title:</Form.Label>
+          <Form.Control
             id='new-title'
             name='title'
             value={newTitle}
             onChange={(event) => dispatch(setNewTitle(event.target.value))}
             placeholder='Blog title'
           />
-        </div>
-        <div>
-          author:
-          <input
+          <Form.Label>author:</Form.Label>
+          <Form.Control
             id='new-author'
             name='author'
             value={newAuthor}
             onChange={(event) => dispatch(setNewAuthor(event.target.value))}
             placeholder='Blog author'
           />
-        </div>
-        <div>
-          url:
-          <input
+          <Form.Label>url:</Form.Label>
+          <Form.Control
             id='new-url'
             name='url'
             value={newUrl}
             onChange={(event) => dispatch(setNewUrl(event.target.value))}
             placeholder='Blog url'
           />
-        </div>
-        <button type='submit'>save</button>
-      </form>
+          <Button variant='success' size='sm' type='submit'>
+            save
+          </Button>
+        </Form.Group>
+      </Form>
     </div>
   );
 };
