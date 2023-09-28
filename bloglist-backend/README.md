@@ -4,7 +4,7 @@ This repository contains the backend for the blog-list application. Authenticati
 
 # controllers
 
-This folder contains router files that handle requests made to the server e.g. post request made to create new blogs on the server stored in blogs.js file, post request made to create new users for the application stored in the users.js, post request for existing user to log into the application stored in login.js file and get request to fetch all and individual note resources from the server etc.
+This folder contains router files that handle requests made to the server e.g. post request made to create new blogs on the server stored in blogs.js file, post request made to create new users for the application stored in the users.js, post request for existing user to log into the application stored in login.js file and get request to fetch all and individual blog resources from the server etc.
 
 # models
 
