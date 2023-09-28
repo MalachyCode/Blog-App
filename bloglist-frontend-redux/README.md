@@ -4,7 +4,7 @@ This folder implements the front end of the bloglist app that is used to store v
 
 # components
 
-The components folder contains components used in the app split into their individual files: BlogForm.js to create new blogs, Blog.js to display each blog retrieved from the database and stored in the application's state, Toggling.js to handle toggling functionality to view and hide forms for adding new bogs and user with the click of a button, Error and SuceessNotification to display various notifications.
+The components folder contains components used in the app split into their individual files: BlogForm.js to create new blogs, UserForm.js for craeting new users, Blog.js to display each blog retrieved from the database and stored in the application's state, Toggling.js to handle toggling functionality to view and hide forms for adding new bogs and user with the click of a button, Error and SuceessNotification to display various notifications.
 
 # services
 
