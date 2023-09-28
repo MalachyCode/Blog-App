@@ -21,8 +21,12 @@ const blogSlice = createSlice({
     setBlogs(state, action) {
       return action.payload;
     },
+    appendComment(state, action) {
+      state.blogs.comments.push(action.payload);
+    },
   },
 });
 
-export const { createBlog, appendBlog, setBlogs } = blogSlice.actions;
+export const { createBlog, appendBlog, setBlogs, appendComment } =
+  blogSlice.actions;
 export default blogSlice.reducer;
