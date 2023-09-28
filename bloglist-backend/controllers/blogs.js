@@ -50,6 +50,7 @@ blogsRouter.post('/', userExtractor, async (request, response) => {
     url: body.url,
     likes: body.likes || 0,
     user: user.id,
+    comments: ['a good blog', 'nicely written blog'],
   });
 
   const savedBlog = await blog.save();
@@ -57,6 +58,21 @@ blogsRouter.post('/', userExtractor, async (request, response) => {
   await user.save();
 
   response.status(201).json(savedBlog);
+});
+
+blogsRouter.post('/:id/comments', async (request, response) => {
+  const body = request.body;
+  const comment = body.comment;
+  const blog = await Blog.findById(request.params.id);
+  if (blog) {
+    blog.comments.push(comment);
+    const savedBlog = await blog.save();
+    const blogComment = savedBlog.comments;
+
+    response.status(201).send(savedBlog.comments[blogComment.length - 1]);
+  } else {
+    response.status(404).end();
+  }
 });
 
 blogsRouter.delete('/:id', userExtractor, async (request, response) => {
