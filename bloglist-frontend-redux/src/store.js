@@ -7,17 +7,21 @@ import userReducer from './reducers/userReducer';
 import titleReducer from './reducers/titleReducer';
 import urlReducer from './reducers/urlReducer';
 import authorReducer from './reducers/authorReducer';
+import usersReducer from './reducers/usersReducer';
+import nameReducer from './reducers/nameReducer';
 
 const store = configureStore({
   reducer: {
     blogs: blogReducer,
-    users: userReducer,
+    user: userReducer,
     notifications: notificationReducer,
     passwords: passwordReducer,
     usernames: usernameReducer,
     authors: authorReducer,
     titles: titleReducer,
     urls: urlReducer,
+    users: usersReducer,
+    name: nameReducer,
   },
 });
 
