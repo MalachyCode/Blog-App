@@ -21,7 +21,7 @@ import Users from './pages/Users';
 import Login from './pages/Login';
 import UserInfo from './pages/UserInfo';
 import BlogInfo from './pages/BlogInfo';
-import { Container, Navbar, Nav } from 'react-bootstrap';
+import { Button, Container, Navbar, Nav } from 'react-bootstrap';
 
 const App = () => {
   const navigate = useNavigate();
@@ -100,6 +100,12 @@ const App = () => {
     padding: 5,
   };
 
+  const handleLogout = async () => {
+    window.localStorage.removeItem('loggedBloglistappUser');
+    console.log(`${user.name} logged out`);
+    dispatch(setUser(null));
+  };
+
   return (
     <div className='container'>
       <Navbar collapseOnSelect expand='lg' bg='dark' data-bs-theme='dark'>
@@ -124,7 +130,20 @@ const App = () => {
                 </Link>
               </Nav.Link>
             </Nav>
-            <Navbar.Text>Signed in as: {user ? user.name : ''}</Navbar.Text>
+            <Navbar.Text className='navbar-text'>
+              Signed in as: {user ? user.name : ''}
+            </Navbar.Text>
+            <Nav.Link href='#' as='span'>
+              <Button
+                variant='outline-secondary'
+                size='sm'
+                type='submit'
+                onClick={handleLogout}
+                className='logout-button'
+              >
+                logout
+              </Button>
+            </Nav.Link>
           </Navbar.Collapse>
         </Container>
       </Navbar>

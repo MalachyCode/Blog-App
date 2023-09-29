@@ -1,22 +1,17 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { setUser } from '../reducers/userReducer';
 import { setUsers } from '../reducers/usersReducer';
 import User from '../components/User';
 import userService from '../services/users';
 import Togglling from '../components/Togglling';
 import UserForm from '../components/UserForm';
-import { Button, Table } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
+import SuccessNotification from '../components/SuccessNotification';
 
 const Users = () => {
-  const user = useSelector((state) => state.user);
   const users = useSelector((state) => state.users);
-  const dispatch = useDispatch();
+  const message = useSelector((state) => state.notifications);
 
-  const handleLogout = async () => {
-    window.localStorage.removeItem('loggedBloglistappUser');
-    console.log(`${user.name} logged out`);
-    dispatch(setUser(null));
-  };
+  const dispatch = useDispatch();
 
   const addUser = (userObject) => {
     userService.create(userObject).then((returnedUser) => {
@@ -35,11 +30,12 @@ const Users = () => {
     <div>
       <h2 className='header'>Users</h2>
 
+      <SuccessNotification message={message} />
+
       <div>
         {/* <Alert variant='secondary'>
           <p>{user.name} logged in</p>
         </Alert> */}
-        {userForm()}
       </div>
 
       <Table striped>
@@ -70,14 +66,7 @@ const Users = () => {
         </tbody>
       </Table>
 
-      <Button
-        variant='outline-secondary'
-        size='sm'
-        type='submit'
-        onClick={handleLogout}
-      >
-        logout
-      </Button>
+      <div className='new-userform'>{userForm()}</div>
     </div>
   );
 };

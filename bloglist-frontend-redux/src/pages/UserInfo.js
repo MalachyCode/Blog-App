@@ -7,15 +7,20 @@ const UserInfo = ({ user }) => {
 
   return (
     <div>
-      <h2 className='header'>Users</h2>
+      {/* <h2 className='header'>Users</h2> */}
 
-      <h2>{user.name}</h2>
-      <p>added blogs</p>
-      <ul>
-        {user.blogs.map((blog) => (
-          <DisplayBlog key={blog.id.toString()} blog={blog} />
-        ))}
-      </ul>
+      <div className='full-user'>
+        <h2 className='user-name'>{user.name}</h2>
+        <h5>Blogs added by this user: </h5>
+
+        <div>
+          <ul className='user-blogs'>
+            {user.blogs.map((blog) => (
+              <DisplayBlog key={blog.id.toString()} blog={blog} />
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
   );
 };

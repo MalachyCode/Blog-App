@@ -3,11 +3,9 @@ import { setMessage } from '../reducers/notificationReducer';
 import { setUsername } from '../reducers/usernameReducer';
 import { setPassword } from '../reducers/passwordReducer';
 import { setName } from '../reducers/nameReducer';
-import SuccessNotification from './SuccessNotification';
 import { Button, Form } from 'react-bootstrap';
 
 const UserForm = ({ createuser }) => {
-  const message = useSelector((state) => state.notifications);
   const name = useSelector((state) => state.name);
   const username = useSelector((state) => state.usernames);
   const password = useSelector((state) => state.passwords);
@@ -34,8 +32,6 @@ const UserForm = ({ createuser }) => {
 
   return (
     <div>
-      <SuccessNotification message={message} />
-
       <h2>create a new user</h2>
 
       <Form onSubmit={addUser}>
@@ -65,7 +61,12 @@ const UserForm = ({ createuser }) => {
             onChange={(event) => dispatch(setPassword(event.target.value))}
             placeholder='Your password'
           />
-          <Button variant='success' size='sm' type='submit'>
+          <Button
+            variant='success'
+            className='save-button'
+            size='sm'
+            type='submit'
+          >
             save
           </Button>
         </Form.Group>

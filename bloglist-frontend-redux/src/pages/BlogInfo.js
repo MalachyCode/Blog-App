@@ -55,7 +55,12 @@ const BlogInfo = ({ blog, handleClick, handleDelete }) => {
         </div>
         <div className='likes'>
           likes {blog.likes}
-          <Button size='sm' variant='outline-success' onClick={handleClick}>
+          <Button
+            size='sm'
+            variant='outline-success'
+            className='like-btn'
+            onClick={handleClick}
+          >
             like
           </Button>
         </div>
@@ -73,16 +78,23 @@ const BlogInfo = ({ blog, handleClick, handleDelete }) => {
               size='sm'
               placeholder='new comment'
             />
-            <Button size='sm' variant='outline-success' type='submit'>
+            <Button
+              size='sm'
+              variant='outline-success'
+              className='comment-btn'
+              type='submit'
+            >
               add comment
             </Button>
           </Form.Group>
         </Form>
-        <ul>
-          {comments.map((comment) => (
-            <CommentDisplay key={commentId()} comment={comment} />
-          ))}
-        </ul>
+        <div>
+          <ul className='comments'>
+            {comments.map((comment) => (
+              <CommentDisplay key={commentId()} comment={comment} />
+            ))}
+          </ul>
+        </div>
         <Button
           className='delete-btn'
           size='sm'

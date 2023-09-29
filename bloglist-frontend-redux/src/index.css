@@ -7,6 +7,7 @@
   padding: 10px;
   margin-bottom: 10px;
 }
+
 .success {
   color: green;
   background: lightgray;
@@ -16,10 +17,41 @@
   padding: 10px;
   margin-bottom: 10px;
 }
-#login-button {
+
+#login-button,
+.save-button,
+.cancel-button {
   width: 100%;
   margin-top: 30px;
 }
+
+.show-button {
+  width: 100%;
+
+  /* margin-left: 10%; */
+  margin-top: 5%;
+}
+
+.full-note,
+.full-user > div,
+h3,
+h2,
+h5,
+p {
+  margin-top: 25px;
+}
+
+.comments,
+.user-blogs > li {
+  list-style-type: circle;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.logout-button {
+  width: 100%;
+}
+
 .toggling {
   /* transition: all 1s ease-out; */
   transition-delay: 0s;
@@ -27,14 +59,36 @@
   transition-timing-function: ease-out;
   transition-property: all;
 }
-/* .delete-btn {
-  background: blue;
-  color: black;
-} */
+
+.delete-btn {
+  margin-top: 90px;
+  margin-left: 46%;
+}
+
+.navbar-text {
+  margin-right: 15px;
+}
+
+.like-btn {
+  margin-left: 5px;
+}
+
+.comment-btn {
+  margin-top: 15px;
+  margin-left: 45%;
+}
+
 .header {
   text-align: center;
   color: brown;
 }
+
+.user-name {
+  text-align: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: darkgreen;
+}
+
 table {
   width: 200px;
 }
@@ -48,4 +102,11 @@ th {
 
 a {
   text-decoration: none;
+}
+
+.new-userform,
+.new-blogform {
+  width: 60%;
+  margin-left: 20%;
+  margin-bottom: 20px;
 }

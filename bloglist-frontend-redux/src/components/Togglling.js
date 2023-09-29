@@ -21,13 +21,19 @@ const Togglling = (props) => {
           size='sm'
           type='submit'
           onClick={toggleVisibility}
+          className='show-button'
         >
           {props.buttonLabel}
         </Button>
       </div>
       <div style={showWhenVisible}>
         {props.children}
-        <Button variant='outline-dark' size='sm' onClick={toggleVisibility}>
+        <Button
+          variant='outline-dark'
+          size='sm'
+          className='cancel-button'
+          onClick={toggleVisibility}
+        >
           cancel
         </Button>
       </div>

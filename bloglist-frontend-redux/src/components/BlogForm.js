@@ -3,12 +3,11 @@ import { setMessage } from '../reducers/notificationReducer';
 import { setNewTitle } from '../reducers/titleReducer';
 import { setNewAuthor } from '../reducers/authorReducer';
 import { setNewUrl } from '../reducers/urlReducer';
-import { Alert, Button, Form } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 
 // import SuccessNotification from './SuccessNotification';
 
 const BlogForm = ({ createblog }) => {
-  const message = useSelector((state) => state.notifications);
   const newTitle = useSelector((state) => state.titles);
   const newAuthor = useSelector((state) => state.authors);
   const newUrl = useSelector((state) => state.urls);
@@ -33,10 +32,6 @@ const BlogForm = ({ createblog }) => {
 
   return (
     <div>
-      {message && <Alert variant='success'>{message}</Alert>}
-
-      {/* <SuccessNotification message={message} /> */}
-
       <h2>create a new blog</h2>
 
       <Form onSubmit={addBlog}>
@@ -65,7 +60,12 @@ const BlogForm = ({ createblog }) => {
             onChange={(event) => dispatch(setNewUrl(event.target.value))}
             placeholder='Blog url'
           />
-          <Button variant='success' size='sm' type='submit'>
+          <Button
+            variant='success'
+            className='save-button'
+            size='sm'
+            type='submit'
+          >
             save
           </Button>
         </Form.Group>

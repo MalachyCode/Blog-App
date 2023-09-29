@@ -1,11 +1,7 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { setUser } from '../reducers/userReducer';
-import { Button } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 
 const Home = () => {
   const blogs = useSelector((state) => state.blogs);
-  const user = useSelector((state) => state.user);
-  const dispatch = useDispatch();
 
   const totalBlogs = blogs.reduce((acc, curr) => {
     if (curr) {
@@ -13,11 +9,6 @@ const Home = () => {
     }
   }, 0);
 
-  const handleLogout = async () => {
-    window.localStorage.removeItem('loggedBloglistappUser');
-    console.log(`${user.name} logged out`);
-    dispatch(setUser(null));
-  };
   return (
     <div>
       <h2 className='header'>Home</h2>
@@ -49,14 +40,6 @@ const Home = () => {
         temporibus repudiandae vel quas veniam nihil, ex, minus hic quidem.
         Deleniti.
       </p>
-      <Button
-        variant='outline-secondary'
-        size='sm'
-        type='submit'
-        onClick={handleLogout}
-      >
-        logout
-      </Button>
     </div>
   );
 };
