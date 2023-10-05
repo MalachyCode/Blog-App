@@ -11,6 +11,7 @@ const UserInfo = ({ user }) => {
 
       <div className='full-user'>
         <h2 className='user-name'>{user.name}</h2>
+        <h4 className='user-name'>username: {user.username}</h4>
         <h5>Blogs added by this user: </h5>
 
         <div>

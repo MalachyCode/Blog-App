@@ -6,7 +6,7 @@ import { setUsername } from '../reducers/usernameReducer';
 import { setPassword } from '../reducers/passwordReducer';
 import { setUser } from '../reducers/userReducer';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Alert, Button, Form } from 'react-bootstrap';
 
 const Login = () => {
@@ -40,6 +40,10 @@ const Login = () => {
         dispatch(setMessage(null));
       }, 5000);
     }
+  };
+
+  const padding = {
+    padding: 5,
   };
 
   return (
@@ -76,6 +80,14 @@ const Login = () => {
           </Button>
         </Form.Group>
       </Form>
+      <div>
+        Dont have an account?
+        {
+          <Link style={padding} to={'/create'}>
+            Create one
+          </Link>
+        }
+      </div>
     </div>
   );
 };

@@ -4,6 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
+2-UserForm.js
 
 # testing
 /coverage

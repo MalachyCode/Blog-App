@@ -21,6 +21,8 @@ import Users from './pages/Users';
 import Login from './pages/Login';
 import UserInfo from './pages/UserInfo';
 import BlogInfo from './pages/BlogInfo';
+// import CreateUser from './pages/CreateUser';
+import UserForm from './components/UserForm';
 import { Button, Container, Navbar, Nav } from 'react-bootstrap';
 
 const App = () => {
@@ -171,6 +173,7 @@ const App = () => {
           element={user ? <Users /> : <Navigate replace to='/login' />}
         />
         <Route path='/login' element={<Login />} />
+        <Route path='/create' element={<UserForm />} />
         <Route
           path='/'
           element={user ? <Home /> : <Navigate replace to='/login' />}
